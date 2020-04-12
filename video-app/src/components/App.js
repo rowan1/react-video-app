@@ -8,6 +8,10 @@ class AppComponent extends React.Component{
 
     state = {videos: [], selectedVideo : null};
 
+    componentDidMount() {
+        this.onTermSubmit('Mickey mouse');
+    }
+
     onTermSubmit = async (term) => {
         const response = await youtube.get("/search",{
             params:{
@@ -15,7 +19,10 @@ class AppComponent extends React.Component{
             }
         });
         console.log(response.data.items);
-        this.setState({videos: response.data.items})
+        this.setState({
+            videos: response.data.items,
+            selectedVideo: response.data.items[0]
+        })
     };
 
     onVideoSelect = (video) => {
